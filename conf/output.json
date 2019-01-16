@@ -1,0 +1,11 @@
+{
+  "ListSecurityGroupLambdaFunctionQualifiedArn": "arn:aws:lambda:us-west-2:163057906376:function:cloudAPI-dev-listSecurityGroup:10",
+  "TopsMetaBucketName": "cloudapi-dev-topsmetabucket-2s08qew2bvms",
+  "TagEc2ResourceLambdaFunctionQualifiedArn": "arn:aws:lambda:us-west-2:163057906376:function:cloudAPI-dev-tagEc2Resource:11",
+  "ListVPCLambdaFunctionQualifiedArn": "arn:aws:lambda:us-west-2:163057906376:function:cloudAPI-dev-listVPC:11",
+  "UpdateCustomerStatusLambdaFunctionQualifiedArn": "arn:aws:lambda:us-west-2:163057906376:function:cloudAPI-dev-updateCustomerStatus:11",
+  "ListSubnetLambdaFunctionQualifiedArn": "arn:aws:lambda:us-west-2:163057906376:function:cloudAPI-dev-listSubnet:11",
+  "Ec2TaskLambdaFunctionQualifiedArn": "arn:aws:lambda:us-west-2:163057906376:function:cloudAPI-dev-ec2Task:11",
+  "ServiceEndpoint": "https://r0bu9wqjz8.execute-api.us-west-2.amazonaws.com/dev",
+  "ServerlessDeploymentBucketName": "cloudapi-dev-serverlessdeploymentbucket-143j2c4qctaah"
+}

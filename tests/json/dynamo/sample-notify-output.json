@@ -1,0 +1,20 @@
+{
+    "region": "ap-southeast-2",
+    "task": "put",
+    "params": {
+        "TableName": "topstatus",
+        "Item": {
+            "statusid": 20,
+            "timestamp": 1546996096274,
+            "status": "STARTED",
+            "metadata": {
+                "customerid": 67,
+                "name": "server-redhat",
+                "region": "us-west-2",
+                "output": "{\"Groups\":[],\"Instances\":[{\"AmiLaunchIndex\":0,\"ImageId\":\"ami-0dbd6cabe4749f197\",\"InstanceId\":\"i-0704dfe70c97fffd1\",\"InstanceType\":\"t2.nano\",\"LaunchTime\":\"2019-01-09T01:08:15.000Z\",\"Monitoring\":{\"State\":\"disabled\"},\"Placement\":{\"AvailabilityZone\":\"us-west-2a\",\"GroupName\":\"\",\"Tenancy\":\"default\"},\"PrivateDnsName\":\"ip-172-31-24-136.us-west-2.compute.internal\",\"PrivateIpAddress\":\"172.31.24.136\",\"ProductCodes\":[],\"PublicDnsName\":\"\",\"State\":{\"Code\":0,\"Name\":\"pending\"},\"StateTransitionReason\":\"\",\"SubnetId\":\"subnet-2c426055\",\"VpcId\":\"vpc-61e43519\",\"Architecture\":\"x86_64\",\"BlockDeviceMappings\":[],\"ClientToken\":\"\",\"EbsOptimized\":false,\"Hypervisor\":\"xen\",\"ElasticGpuAssociations\":[],\"NetworkInterfaces\":[{\"Attachment\":{\"AttachTime\":\"2019-01-09T01:08:15.000Z\",\"AttachmentId\":\"eni-attach-023c9038a0a73acac\",\"DeleteOnTermination\":true,\"DeviceIndex\":0,\"Status\":\"attaching\"},\"Description\":\"\",\"Groups\":[{\"GroupName\":\"default\",\"GroupId\":\"sg-68e6a61c\"}],\"Ipv6Addresses\":[],\"MacAddress\":\"02:e0:03:2b:91:0a\",\"NetworkInterfaceId\":\"eni-05d1ae3eb0379880d\",\"OwnerId\":\"561280630638\",\"PrivateDnsName\":\"ip-172-31-24-136.us-west-2.compute.internal\",\"PrivateIpAddress\":\"172.31.24.136\",\"PrivateIpAddresses\":[{\"Primary\":true,\"PrivateDnsName\":\"ip-172-31-24-136.us-west-2.compute.internal\",\"PrivateIpAddress\":\"172.31.24.136\"}],\"SourceDestCheck\":true,\"Status\":\"in-use\",\"SubnetId\":\"subnet-2c426055\",\"VpcId\":\"vpc-61e43519\"}],\"RootDeviceName\":\"/dev/sda1\",\"RootDeviceType\":\"ebs\",\"SecurityGroups\":[{\"GroupName\":\"default\",\"GroupId\":\"sg-68e6a61c\"}],\"SourceDestCheck\":true,\"StateReason\":{\"Code\":\"pending\",\"Message\":\"pending\"},\"Tags\":[],\"VirtualizationType\":\"hvm\",\"CpuOptions\":{\"CoreCount\":1,\"ThreadsPerCore\":1}}],\"OwnerId\":\"561280630638\",\"ReservationId\":\"r-02ec87c03ad95fc02\"}",
+                "RoleArn": "arn:aws:iam::561280630638:role/TeemOpsCloudApp"
+            }
+        },
+        "ReturnConsumedCapacity": "TOTAL"
+    }
+}

@@ -1,0 +1,266 @@
+# Teem Ops Cloud API Services
+
+service: cloudAPI
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-west-2
+  stage: ${opt:stage, self:custom.defaultStage}
+  memorySize: 256
+  iamRoleStatements: # permissions for all of your functions can be set here
+    - Effect: Allow
+      Action: # Gives permission to EC2
+        - ec2:*
+      Resource: "*"
+    - Effect: Allow
+      Action: # Gives permission to EC2
+        - sts:AssumeRole
+      Resource: "arn:aws:iam::*:role/TeemOpsCloudApp"
+    - Effect: Allow
+      Action: # Gives permission to GET S3 objects from Meta Bucket
+        - s3:GetObject
+      Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: TopsMetaBucket
+             - "/*"
+    - Effect: Allow
+      Action: # Gives permission to PUT S3 objects in Meta Bucket
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: TopsMetaBucket
+             - "/*"
+    - Effect: Allow
+      Action: # Gives permission to LIST S3 objects in Meta Bucket
+        - s3:ListBucket
+      Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: TopsMetaBucket
+    - Effect: Allow
+      Action: # Gives permission to S3
+        - s3:ListAllMyBuckets
+      Resource: "arn:aws:s3:::*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:Query
+      Resource: "arn:aws:dynamodb:*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:GetRecords
+      Resource: "arn:aws:dynamodb:*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:GetShardIterator
+      Resource: "arn:aws:dynamodb:*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:DescribeStream
+      Resource: "arn:aws:dynamodb:*"
+    - Effect: Allow
+      Action: # Gives permission to Dynamo
+        - dynamodb:ListStreams
+      Resource: "arn:aws:dynamodb:*"
+    
+
+functions:
+  ec2Task:
+    handler: ec2.ec2TaskFromSQS
+    description: Launch Ec2 Task (start, stop, terminate etc...)
+    timeout: 240
+    memorySize: 1024
+    events:
+      # - sqs: arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:${self:custom.mainSQSName}
+      - sqs:
+          arn: 
+            Fn::GetAtt:
+              - TopsMainSQS
+              - Arn
+  updateCustomerStatus:
+    handler: s3.s3TaskFromDynamo
+    description: updates the S3 customers meta data store with new status from Dynamo table 'topstatus'
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 1
+          startingPosition: LATEST
+          arn: 
+            Fn::GetAtt:
+              - TopsStatusTable
+              - StreamArn
+  tagEc2Resource:
+    handler: ec2.ec2TagFromId
+    description: Tag instance based on the topstatus using data attribute or field
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 1
+          startingPosition: LATEST
+          arn: 
+            Fn::GetAtt:
+              - TopsStatusTable
+              - StreamArn
+  listVPC:
+    handler: vpc.listVPC
+    description: Handles listing of an AWS account's VPCs by given region
+    timeout: 6
+    memorySize: 512
+    events:
+      - http:
+          path: vpcs/list
+          method: post
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - x-access-token
+              - Access-Control-Allow-Origin:'*'
+            allowCredentials: true
+  listSubnet:
+    handler: vpc.listSubnet
+    description: Handles listing of an AWS account's Subnets by given region
+    timeout: 6
+    memorySize: 512
+    events:
+      - http:
+          path: vpcs/listSubnets
+          method: POST 
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - x-access-token
+              - Access-Control-Allow-Origin:'*'
+            allowCredentials: true
+  listSecurityGroup:
+    handler: vpc.listSG
+    description: Handles listing of an AWS account's Subnets by given region
+    timeout: 6
+    memorySize: 512
+    events:
+      - http:
+          path: vpcs/listSGs
+          method: POST
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - x-access-token
+              - Access-Control-Allow-Origin:'*'
+            allowCredentials: true
+
+custom:
+  defaultStage: beta
+  output:
+    handle: scripts/output.process
+    file: conf/output.json
+
+resources:  
+  Resources:
+    TopsMainSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: teemops_main
+        VisibilityTimeout: 260  #Really important this is >= the Lambda timeout
+    TopsMetaBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: Private
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        VersioningConfiguration:
+          Status: Enabled
+      DeletionPolicy: Retain
+    TopsNotifyTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: topsnotify
+        AttributeDefinitions:
+          - 
+            AttributeName: notifyid
+            AttributeType: N
+          - 
+            AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - 
+            AttributeName: notifyid
+            KeyType: HASH
+          - 
+            AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 3
+          WriteCapacityUnits: 3
+    TopsStatusTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: topstatus
+        AttributeDefinitions:
+          - 
+            AttributeName: statusid
+            AttributeType: N
+          - 
+            AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - 
+            AttributeName: statusid
+            KeyType: HASH
+          - 
+            AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 3
+          WriteCapacityUnits: 3
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+  Outputs:
+    TopsMetaBucketName:
+      Description: The Teemops S3 Bucket used to store apps meta data
+      Value: 
+        Fn::Select:
+          - '0'
+          - Fn::Split:
+            - "."
+            - Fn::GetAtt:
+              - TopsMetaBucket
+              - DomainName
+  
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-stack-output
+  

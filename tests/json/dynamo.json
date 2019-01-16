@@ -1,0 +1,40 @@
+{
+    "Records": [
+        {
+            "eventID": "5c3cc518e02f4307f5fc2cc3c140a31e",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "ap-southeast-2",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1506238800,
+                "Keys": {
+                    "statusid": {
+                        "N": "9"
+                    },
+                    "timestamp": {
+                        "N": "1506230043915"
+                    }
+                },
+                "NewImage": {
+                    "statusid": {
+                        "N": "9"
+                    },
+                    "customerid": {
+                        "N": "67"
+                    },
+                    "status": {
+                        "S": "STARTED"
+                    },
+                    "timestamp": {
+                        "N": "1506230043915"
+                    }
+                },
+                "SequenceNumber": "118377200000000000150025194",
+                "SizeBytes": 79,
+                "StreamViewType": "NEW_IMAGE"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:ap-southeast-2:163057906376:table/topstatus/stream/2017-09-24T00:15:02.321"
+        }
+    ]
+}

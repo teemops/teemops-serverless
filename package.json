@@ -1,0 +1,26 @@
+{
+  "name": "teemops_cloudapi",
+  "version": "1.0.0",
+  "description": "Teemops_cloudapi Lambda function",
+  "dependencies": {
+    "aws": "0.0.3-2",
+    "config-json": "^1.0.0",
+    "date-format": "^1.1",
+    "fibers": "^3.1.1",
+    "jmespath": "^0.15",
+    "serverless-dynamodb-client": "0.0.2",
+    "serverless-stack-output": "^0.2.3",
+    "uuid": "^3.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "serverless-dynamodb-local": "^0.2.35",
+    "serverless-offline": "^3.31.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Fellows <kiwifellows@gmail.com>",
+  "license": "ISC"
+}

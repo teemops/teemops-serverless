@@ -1,0 +1,43 @@
+######################
+# Node
+######################
+/node/**
+/node_modules/**
+npm-debug.log
+.idea
+/.idea/**
+
+######################
+# Serverless
+######################
+.serverless
+/.serverless/**
+
+
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+######################
+# Node Environments Files
+######################
+*.env
+

@@ -1,0 +1,29 @@
+{
+    "ExternalId": "cloudapi-1234",
+    "sqs": {
+        "endpoint": "https://sqs.us-west-2.amazonaws.com",
+        "region": "us-west-2",
+        "jobsq": "teem_dev_jobs"
+    },
+    "s3": {
+        "app_bucket": "teemops-meta-beta",
+        "q_bucket": "s3qteemopsbeta",
+        "app_path": "apps/vm/",
+        "region": "us-west-2",
+         "endpoint": "https://s3-us-west-2.amazonaws.com"
+    },
+    "ec2":{
+        "region": "us-west-2"
+    },
+    "s3q": {
+        "ec2": "q/ec2"
+    },
+    "s3meta":{
+        "region": "us-west-2"
+    },
+    "notify":{
+        "table": "topsnotify",
+        "status": "topstatus",
+        "region": "us-west-2"
+    }
+}

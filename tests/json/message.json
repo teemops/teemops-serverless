@@ -1,0 +1,92 @@
+{
+    "RoleArn": "arn:aws:iam::163057906376:role/TeemOpsIAMRole-TeemOps-YJ4BFDTP7Y0C",
+    "appid": 10,
+    "body": {
+        "notify": {
+            "id": 10,
+            "msg": "Server Test Launched Succesfully.",
+            "status": "STARTED",
+            "type": "info"
+        },
+        "params": {
+            "BlockDeviceMappings": [
+                {
+                    "DeviceName": "/dev/sda1",
+                    "Ebs": {
+                        "VolumeSize": 123,
+                        "VolumeType": "gp2"
+                    }
+                }
+            ],
+            "ImageId": "ami-a9e532c7",
+            "InstanceType": "t2.nano",
+            "MaxCount": 1,
+            "MinCount": 1,
+            "SecurityGroupIds": [
+                "sg-30444859"
+            ],
+            "SubnetId": "subnet-58cdb431"
+        },
+        "postTasks": [
+            {
+                "params": {
+                    "Resources": [
+                        "{{output.Instances[0].InstanceId}}"
+                    ],
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "Test"
+                        },
+                        {
+                            "Key": "launched_by",
+                            "Value": "teemops"
+                        },
+                        {
+                            "Key": "teemops_app_id",
+                            "Value": "10"
+                        }
+                    ]
+                },
+                "task": "createTags"
+            },
+            {
+                "params": {
+                    "Resources": [
+                        "{{output.Instances[0].InstanceId}}"
+                    ]
+                },
+                "save": {
+                    "body": "{{me.Reservations[0].Instances[0]}}",
+                    "bucket": "{{Buckets.meta}}",
+                    "path": "apps/vm/10.json"
+                },
+                "task": "describeInstances"
+            }
+        ],
+        "preTask": {
+            "error": {
+                "msg": "Server Test is already running, Teem Ops Status has been updated to reflect changes.",
+                "status": "STARTED",
+                "type": "info",
+                "value": "{{output.Reservations.count!=0}}"
+            },
+            "params": {
+                "Filters": [
+                    {
+                        "Name": "tag:teemops_app_id",
+                        "Values": [
+                            "10"
+                        ]
+                    }
+                ]
+            },
+            "task": "describeInstances"
+        },
+        "region": "ap-northeast-2",
+        "task": "runInstances"
+    },
+    "customerid": 67,
+    "q": "ec2",
+    "userid": 67
+}

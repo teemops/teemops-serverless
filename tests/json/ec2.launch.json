@@ -1,0 +1,28 @@
+{
+    "Records": [
+        {
+            "messageId": "9f0eb33e-331d-42c0-9efe-2074be7e0d74",
+            "receiptHandle": "AQEBoc48ZYVIhE/Xtl3Yj6lVF4hLo2e9bjwLuBtyGOgg1G39w4U1DUPmcd7O3mlj4UkTyQR6Xk3wfWd4NpnAd5iCVHeK8ki5ejYyhGiP6zEXKZhLeFbzZAFEtuznwkrQlhPKc6a+8ry+PWBZU8QLi9JwOU/DxWE+vLGAK02ATXYd8SJkTLrRNPaltlVXw5KdbRHNx1muh/loWyC1Pd/D9qbrL7inWz3auLvkcbJYNOFaIUOnTerWYisaAzW2GzAnkM3O62Y5vg8F3cJ/QEnyiRQzzjCg4JkgyAJdQImhZ1cSmsyISEdUE4gIqTBWE9esegpas56pZAPjZP1VrzM1VWjUkY9ipC66F6Dt/PUKMPnlwW4v3ASCvTAevIASTNnEtOA6HaMOzVtuyHJB8rLLHzKDFg==",
+            "body": "{\"q\":\"ec2\",\"name\":\"server-redhat\",\"customerid\":67,\"userid\":67,\"appid\":20,\"RoleArn\":\"arn:aws:iam::561280630638:role/TeemOpsCloudApp\",\"body\":{\"task\":\"runInstances\",\"check\":{\"id\":20,\"conditions\":[\"STARTED\",\"STOPPED\",\"STARTING\",\"STOPPING\",\"RESTARTING\",\"DELETING\"],\"msg\":\"Server server-redhat has already been launched.\",\"type\":\"info\"},\"notify\":{\"id\":20,\"msg\":\"Server server-redhat Launched Succesfully.\",\"type\":\"info\",\"status\":\"STARTED\"},\"params\":{\"MinCount\":1,\"MaxCount\":1,\"ImageId\":\"ami-0dbd6cabe4749f197\",\"InstanceType\":\"t2.nano\",\"SubnetId\":\"subnet-2c426055\",\"SecurityGroupIds\":[\"sg-68e6a61c\"],\"BlockDeviceMappings\":[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"VolumeSize\":30,\"VolumeType\":\"gp2\"}}]},\"region\":\"us-west-2\",\"save\":{\"bucket\":\"cloudapi-dev-topsmetabucket-2s08qew2bvms\",\"path\":\"apps/vm/20.json\"}}}",
+            "attributes": {
+                "ApproximateReceiveCount": "1",
+                "SentTimestamp": "1546983330390",
+                "SenderId": "AIDAJQUHQGMGPNMSKZY6I",
+                "ApproximateFirstReceiveTimestamp": "1546983330427"
+            },
+            "messageAttributes": {
+                "mainKey": {
+                    "stringValue": "20",
+                    "stringListValues": [],
+                    "binaryListValues": [],
+                    "dataType": "Number"
+                }
+            },
+            "md5OfMessageAttributes": "1ff28d634343c56b7ba3773b70adfe65",
+            "md5OfBody": "7ceff29d9b0e963afdbacbf1c65b3b2d",
+            "eventSource": "aws:sqs",
+            "eventSourceARN": "arn:aws:sqs:us-west-2:163057906376:teemops_main",
+            "awsRegion": "us-west-2"
+        }
+    ]
+}
