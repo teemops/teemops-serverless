@@ -1,4 +1,9 @@
 #Teemops serverless cloudapi
+Simplified AWS Operations
+
+Join Slack Channel: http://bit.ly/topslack
+
+This is the Serverless/Job Queue and Back end part of https://github.com/teemops/teemops
 
 #Create a set of new serverless microservices
 '''
