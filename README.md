@@ -5,10 +5,17 @@ Join Slack Channel: http://bit.ly/topslack
 
 This is the Serverless/Job Queue and Back end part of https://github.com/teemops/teemops
 
-#Create a set of new serverless microservices
-'''
-serverless create --template aws-nodejs --path myService
-'''
+### What is this repository for? ###
+
+### Setup and configuration files
+You can run the installer, which will take care of everything including dependencies and ensure you are running on the latest build.
+See https://github.com/teemops/teemops
+
+### Manual install
+```
+cd <this_repos_folder>
+npm install
+```
 
 #Deploy entire serverless stack in folder
 '''
@@ -17,8 +24,8 @@ serverless deploy
 serverless deploy --stage beta
 '''
 
-#Deploy a single serverless function
-#Must have already been deployed by serverless deploy command above
+### Deploy a single serverless function
+Must have already been deployed by serverless deploy command above
 '''
 serverless deploy function --function listVPC
 '''
@@ -47,3 +54,20 @@ Test data needs to be modified in tests/json folder.
 #Test launching EC2 instance
 serverless invoke local -f ec2Task -p tests/json/ec2.launch.json
 ```
+
+### Installing latest node version ###
+
+You can install nvm locally:
+# install nvm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+
+# install node 8
+nvm install 8
+
+# to make node 8 the default
+nvm alias default 8
+
+### Older versions of node
+
+If you have an older version of node > v4, this app will support it. 
+
